@@ -11,13 +11,32 @@ interface Ibook {
     price : number;
 }
 
-let content : HTMLDivElement = <HTMLDivElement>document.getElementById("content");
+new Vue({
+    el: "#app", 
+    data: {
+        books : [],
+        errors : []
+    },
 
-axios.get<Ibook[]>("http://anbo-bookstorerest.azurewebsites.net/api/Books")
-.then((response : AxiosResponse<Ibook[]>) => {
-    content.innerHTML = MakeLongHtmlList(response.data)
-    
+    created()
+    {
+        console.log("CREATED")
+        axios.get<Ibook[]>("http://anbo-bookstorerest.azurewebsites.net/api/Books")
+            .then((response : AxiosResponse<Ibook[]>) => {
+                console.log(response.data)
+                this.books = response.data
+            })
+            .catch((error : AxiosError) => {
+                this.errors = error
+            })
+    },
+
+    methods: {
+
+    }
 })
+
+
 
 function MakeLongHtmlList(data: Ibook[]):string
 {
