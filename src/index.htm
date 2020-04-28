@@ -11,22 +11,47 @@
 </head>
 
 <body>
-  <h1>BOOKSTORE TYPESCRIPT AND BOOTSTRAP 1</h1>
+  <h1>DR RECORDS VUE</h1>
   <div id="app">
-    <input type="text" v-model.lazy="search" placeholder="Search" @change = "bookSearch()">
-    <table v-if="books.length">
-      <th>ID</th>
+
+    <button @click="addPressed = !addPressed">Add Record</button>
+    <div v-show="addPressed">
+      <input type="text" v-model="addForm.title" placeholder="Title">
+      <input type="text" v-model="addForm.artist" placeholder="Artist">
+      <input type="number" v-model="addForm.releaseYear" placeholder="Year">
+      <button @click="addRecord">Add</button>
+    </div>
+
+    <table v-if="records.length">
       <th>Title</th>
-      <th>Author</th>
-      <th>Publisher</th>
-      <th>Price</th>
-      <tr v-for="book in books">
-        <td>{{book.title}}</td>
-        <td>{{book.artist}}</td>
-        <td>{{book.releaseYear}}</td>
-        <td>a</td>
-        <td><b></b></td>
+      <th>Artist</th>
+      <th>Release Year</th>
+      <th>Rediger</th>
+      <th>Slet</th>
+
+      <tr v-for="record in records">
+        <td>
+          <input v-if="record.id == editId"  type="text" v-model="editForm.title = record.title" placeholder="title">
+          <span v-show="record.id != editId">{{record.title}}</span>
+        </td>
+        <td>
+          <input v-if="record.id == editId"  type="text" v-model="editForm.artist = record.artist" placeholder="artist">
+          <span v-show="record.id != editId">{{record.artist}}</span>
+        </td>
+        <td>
+          <input v-if="record.id == editId"  type="number" v-model="editForm.releaseYear = record.releaseYear" placeholder="releaseYear">
+          <span  v-show="record.id != editId">{{record.releaseYear}}</span>  
+        </td>
+        <td>
+          <button v-if="record.id == editId" @click="editSaveRecord(record.id)">Gem</button>
+          <button v-show="record.id != editId" @click="editId = record.id">Rediger</button>
+        </td>
+        <td>
+          <button v-if="record.id == editId" @click="editId = null">Annuller</button>
+          <button v-show="record.id != editId" @click="deleteRecord(record.id)">Slet</button>
+        </td>
       </tr>
+
     </table>
     <div v-else>{{errors}}</div>
   </div>
