@@ -7,6 +7,7 @@
   <link rel="stylesheet" type="text/css" href="bundle.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
   
 </head>
 
@@ -14,15 +15,16 @@
   <h1>DR RECORDS VUE</h1>
   <div id="app">
 
-    <button @click="addPressed = !addPressed">Add Record</button>
+    <button class="btn btn-success" @click="addPressed = !addPressed">Add +</button>
     <div v-show="addPressed">
-      <input type="text" v-model="addForm.title" placeholder="Title">
+      <input  type="text" v-model="addForm.title" placeholder="Title">
       <input type="text" v-model="addForm.artist" placeholder="Artist">
       <input type="number" v-model="addForm.releaseYear" placeholder="Year">
       <button @click="addRecord">Add</button>
     </div>
 
-    <table v-if="records.length">
+    <div class="table-responsive-sm">
+    <table class="table table-dark table-striped" v-if="records.length">
       <th>Title</th>
       <th>Artist</th>
       <th>Release Year</th>
@@ -31,28 +33,29 @@
 
       <tr v-for="record in records">
         <td>
-          <input v-if="record.id == editId"  type="text" v-model="editForm.title = record.title" placeholder="title">
+          <input class="form-control" v-if="record.id == editId"  type="text" v-model="editForm.title = record.title" placeholder="title">
           <span v-show="record.id != editId">{{record.title}}</span>
         </td>
         <td>
-          <input v-if="record.id == editId"  type="text" v-model="editForm.artist = record.artist" placeholder="artist">
+          <input class="form-control" v-if="record.id == editId"  type="text" v-model="editForm.artist = record.artist" placeholder="artist">
           <span v-show="record.id != editId">{{record.artist}}</span>
         </td>
         <td>
-          <input v-if="record.id == editId"  type="number" v-model="editForm.releaseYear = record.releaseYear" placeholder="releaseYear">
+          <input class="form-control" v-if="record.id == editId"  type="number" v-model="editForm.releaseYear = record.releaseYear" placeholder="releaseYear">
           <span  v-show="record.id != editId">{{record.releaseYear}}</span>  
         </td>
         <td>
           <button v-if="record.id == editId" @click="editSaveRecord(record.id)">Gem</button>
-          <button v-show="record.id != editId" @click="editId = record.id">Rediger</button>
+          <button v-show="record.id != editId" @click="editId = record.id"><i class="fas fa-baby"></i></button>
         </td>
         <td>
           <button v-if="record.id == editId" @click="editId = null">Annuller</button>
-          <button v-show="record.id != editId" @click="deleteRecord(record.id)">Slet</button>
+          <button v-show="record.id != editId" @click="deleteRecord(record.id)"><i class="fas fa-angry"></i></button>
         </td>
       </tr>
 
     </table>
+    </div>
     <div v-else>{{errors}}</div>
   </div>
     
