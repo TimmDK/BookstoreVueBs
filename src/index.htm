@@ -17,10 +17,10 @@
 
     <button class="btn btn-success" @click="addPressed = !addPressed">Add +</button>
     <div v-show="addPressed">
-      <input  type="text" v-model="addForm.title" placeholder="Title">
-      <input type="text" v-model="addForm.artist" placeholder="Artist">
-      <input type="number" v-model="addForm.releaseYear" placeholder="Year">
-      <button @click="addRecord">Add</button>
+      <input class="form-control" type="text" v-model="addForm.title" placeholder="Title">
+      <input class="form-control" type="text" v-model="addForm.artist" placeholder="Artist">
+      <input class="form-control" type="number" v-model="addForm.releaseYear" placeholder="Year">
+      <a @click="addRecord">Add</button></a>
     </div>
 
     <div class="table-responsive-sm">
@@ -28,7 +28,9 @@
       <th>Title</th>
       <th>Artist</th>
       <th>Release Year</th>
-      <th>Rediger</th>
+      <th>
+        Rediger
+      </th>
       <th>Slet</th>
 
       <tr v-for="record in records">
@@ -45,18 +47,18 @@
           <span  v-show="record.id != editId">{{record.releaseYear}}</span>  
         </td>
         <td>
-          <button v-if="record.id == editId" @click="editSaveRecord(record.id)">Gem</button>
-          <button v-show="record.id != editId" @click="editId = record.id"><i class="fas fa-baby"></i></button>
+          <a v-if="record.id == editId" @click="editSaveRecord(record.id)"><i class="far fa-check-circle"></i></a>
+          <a v-show="record.id != editId" @click="editId = record.id"><i class="fas fa-edit"></i></a>
         </td>
         <td>
           <button v-if="record.id == editId" @click="editId = null">Annuller</button>
-          <button v-show="record.id != editId" @click="deleteRecord(record.id)"><i class="fas fa-angry"></i></button>
+          <a v-show="record.id != editId" @click="deleteRecord(record.id)"><i class="fas fa-trash"></i></a>
         </td>
       </tr>
 
     </table>
     </div>
-    <div v-else>{{errors}}</div>
+    <div class="alert-danger" v-for="error in errors">{{errors}}</div>
   </div>
     
   <script src="bundle.js"></script>

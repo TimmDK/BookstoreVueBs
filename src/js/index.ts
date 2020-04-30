@@ -92,7 +92,9 @@ new Vue({
                 console.log("Rettet " + id)
                 this.editId = null
             })
-            .catch
+            .catch((error : AxiosError) => {
+                this.errors = error
+            })
 
         },
 
@@ -105,7 +107,9 @@ new Vue({
                 .then((response : AxiosResponse) =>{
                     this.getAll()
                 })
-                .catch
+                .catch((error : AxiosError) => {
+                    this.errors = error
+                })
             }
         },
     }
